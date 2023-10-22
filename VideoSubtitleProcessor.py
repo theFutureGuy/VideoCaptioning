@@ -1,4 +1,5 @@
 import os
+import shutil
 import subprocess
 import speech_recognition as sr
 from googletrans import Translator
@@ -64,15 +65,18 @@ class VideoSubtitleProcessor:
             text_file.write(recognized_text)
 
     def translate_text(self, text_path, translated_text_path):
-        translator = Translator()
-        with open(text_path, 'r', encoding='utf-8') as text_file:
-            text = text_file.read()
+        if self.target_language == 'en':
+            shutil.copy(text_path, translated_text_path)
+        else:
+            translator = Translator()
+            with open(text_path, 'r', encoding='utf-8') as text_file:
+                text = text_file.read()
 
-        translated = translator.translate(text, dest=self.target_language)
-        translated_text = translated.text
+            translated = translator.translate(text, dest=self.target_language)
+            translated_text = translated.text
 
-        with open(translated_text_path, 'w', encoding='utf-8') as translated_file:
-            translated_file.write(translated_text)
+            with open(translated_text_path, 'w', encoding='utf-8') as translated_file:
+                translated_file.write(translated_text)
 
     def merge_srt_with_video(self, input_video, srt_path, output_video):
         command = [
