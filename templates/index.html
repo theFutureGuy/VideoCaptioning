@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video Subtitle Processor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Video Subtitle Processor</h1>
+    <form method="POST" action="/process_video" enctype="multipart/form-data">
+        <label for="file">Choose a video file to process:</label>
+        <input type="file" name="file" id="file" accept=".mp4, .avi">
+        <br>
+        <label for="language">Select target language for translation:</label>
+        <select name="language" id="language">
+            <option value="hi">Hindi</option>
+            <option value="bn">Bengali</option>
+            <option value="te">Telugu</option>
+            <option value="mr">Marathi</option>
+            <option value="ta">Tamil</option>
+            <option value="ur">Urdu</option>
+            <option value="gu">Gujarati</option>
+            <option value="kn">Kannada</option>
+            <option value="ml">Malayalam</option>
+            <option value="pa">Punjabi</option>
+            <option value="or">Odia</option>
+            <option value="as">Assamese</option>
+        </select>
+        <br>
+        <input type="submit" value="Process Video" id="processButton">
+        <div id="loading" style="display: none;">Processing... <div class="loader"></div></div>
+    </form>
+    <script>
+        function showLoading() {
+            document.getElementById('loading').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
+
