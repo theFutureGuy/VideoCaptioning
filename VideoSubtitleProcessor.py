@@ -4,21 +4,26 @@ import speech_recognition as sr
 from googletrans import Translator
 
 class VideoSubtitleProcessor:
-    def __init__(self, target_language='es'):
-        self.target_language = target_language
+    def __init__(self):
+        self.target_language = 'es'
 
     def set_target_language(self, target_language):
         self.target_language = target_language
 
-    def process_video(self, input_video, target_language=None):
+    def process_video(self, input_video, target_language=None, output_dir=None):
         if target_language:
             self.set_target_language(target_language)
-        base_name = os.path.splitext(input_video)[0]
-        audio_path = f'{base_name}.wav'
-        recognized_text_path = f'{base_name}_recognized.txt'
-        translated_text_path = f'{base_name}_translated.txt'
-        srt_path = f'{base_name}.srt'
-        output_video = f'{base_name}_output.mp4'
+
+        # Determine the output directory
+        if output_dir is None:
+            output_dir = os.path.dirname(input_video)
+
+        base_name = os.path.splitext(os.path.basename(input_video))[0]
+        audio_path = os.path.join(output_dir, f'{base_name}.wav')
+        recognized_text_path = os.path.join(output_dir, f'{base_name}_recognized.txt')
+        translated_text_path = os.path.join(output_dir, f'{base_name}_translated.txt')
+        srt_path = os.path.join(output_dir, f'{base_name}.srt')
+        output_video = os.path.join(output_dir, f'{base_name}_output.mp4')
 
         self.extract_audio(input_video, audio_path)
         self.recognize_speech(audio_path, recognized_text_path)
@@ -33,6 +38,8 @@ class VideoSubtitleProcessor:
         os.remove(recognized_text_path)
         os.remove(translated_text_path)
         os.remove(srt_path)
+
+        return output_video
 
     def extract_audio(self, input_video, output_audio):
         command = [

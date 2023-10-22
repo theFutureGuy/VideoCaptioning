@@ -1,13 +1,14 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, url_for
 from VideoSubtitleProcessor import VideoSubtitleProcessor
 import os
-
 app = Flask(__name__, template_folder='templates')
 
-
+# Path to the directory where video files are uploaded
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+# Path to the directory where output videos will be stored
+OUTPUT_DIR = 'output_videos'
 
 processor = VideoSubtitleProcessor(target_language='es')
 
@@ -28,11 +29,10 @@ def process_video():
     if file:
         filename = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
         file.save(filename)
-        processor.process_video(filename)
+        processed_video_path = processor.process_video(filename, output_dir=OUTPUT_DIR)
 
-        processing_done = True
-
-        return render_template('index.html', processing_done=processing_done)
+        # Provide a link to download the processed video
+        return render_template('index.html', processing_done=True, video_path=processed_video_path)
 
 if __name__ == '__main__':
     app.run(debug=True)

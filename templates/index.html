@@ -28,6 +28,9 @@
         <br>
         <input type="submit" value="Process Video" id="processButton">
         <div id="loading" style="display: none;">Processing... <div class="loader"></div></div>
+        <div>
+            <a href="{{ video_path }}" download>Download Processed Video</a>
+        </div>
     </form>
     <script>
         function showLoading() {
