@@ -14,8 +14,7 @@ class VideoSubtitleProcessor:
     def process_video(self, input_video, target_language=None, output_dir=None):
         if target_language:
             self.set_target_language(target_language)
-
-        # Determine the output directory
+            
         if output_dir is None:
             output_dir = os.path.dirname(input_video)
 
