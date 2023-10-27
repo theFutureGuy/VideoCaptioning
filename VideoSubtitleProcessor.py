@@ -6,7 +6,7 @@ import shutil
 
 class VideoSubtitleProcessor:
     def __init__(self):
-        self.target_language = 'es'  # Default target language, you can change it
+        self.target_language = 'es' 
 
     def set_target_language(self, target_language):
         self.target_language = target_language
