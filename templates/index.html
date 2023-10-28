@@ -1,41 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Video Subtitle Processor</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-
-    <script>
-        function showLoading() {
-            document.getElementById("loading").style.display = "block";
-        }
-
-        function showSuccess() {
-            document.getElementById("loading").style.display = "none";
-            document.getElementById("alertBox").style.display = "block";
-        }
-    </script>
+    <link rel="stylesheet" href="static/styles.css">
+    <title>Video Captioning</title>
 </head>
 <body>
-    <h1>Video Subtitle Processor</h1>
-    <form method="POST" action="/process_video" enctype="multipart/form-data" onsubmit="showLoading()">
+    <h1>Video Captioning Processor</h1>
+    <form method="POST" action="/" enctype="multipart/form-data">
         <label for="file">Choose a video file to process:</label>
-        <input type="file" name="file" id="file" accept=".mp4, .avi">
+        <input type="file" name="file" id="file" accept=".mp4">
         <br>
         <label for="target_language">Select target language for translation:</label>
         <select name="target_language" id="target_language">
-            <option value="hi">Hindi</option>
-            <option value="ta">Tamil</option>
-            <option value="te">Telugu</option>
-            <option value="kn">Kannada</option>
-            <option value="bn">Bengali</option>
+            <option value="en">English</option>
+            <option value="es">Spanish</option>
         </select>
         <br>
-        <input type="submit" value="Process Video" id="processButton">
+        <input type="submit" value="Process Video">
     </form>
-    <div id="loading" style="display: none;">Processing... <div class="loader"></div></div>
-    <div id="alertBox" style="display: none;">
-        <p>Processing is complete!</p>
-        <a href="{{ video_path }}">Download Processed Video</a>
-    </div>
 </body>
 </html>
